@@ -2,6 +2,16 @@
 
 C++23 project with CMake build system.
 
+## Creating a New Project
+
+Initialize a new C++ project from this template:
+
+```bash
+mkdir my-cpp-project
+cd my-cpp-project
+nix flake init -t /home/wvhulle/.config/nixos#cpp
+```
+
 ## Prerequisites
 
 All tools are available globally through NixOS configuration:
@@ -20,7 +30,7 @@ All tools are available globally through NixOS configuration:
 
 ```bash
 # Generate build files
-cmake -B build
+cmake -B build -DCMAKE_CXX_COMPILER=clang++
 
 # Build the project
 cmake --build build
@@ -78,7 +88,7 @@ Edit your source files - the project rebuilds automatically on save.
 
 ```bash
 # Configure (only needed once or after CMakeLists.txt changes)
-cmake -B build
+cmake -B build -DCMAKE_CXX_COMPILER=clang++
 
 # Build
 cmake --build build
@@ -87,7 +97,7 @@ cmake --build build
 cmake --build build --target main
 
 # Clean and rebuild
-rm -rf build && cmake -B build && cmake --build build
+rm -rf build && cmake -B build -DCMAKE_CXX_COMPILER=clang++ && cmake --build build
 ```
 
 ## Customization
@@ -113,6 +123,6 @@ Edit `.clang-tidy` to customize which checks run.
 
 ## Tips
 
-- **Rebuild compile_commands.json** after CMakeLists.txt changes: `cmake -B build`
+- **Rebuild compile_commands.json** after CMakeLists.txt changes: `cmake -B build -DCMAKE_CXX_COMPILER=clang++`
 - **Format manually** in Helix: `:format`
 - **View diagnostics** in Helix: `:log-open` for detailed clangd output
