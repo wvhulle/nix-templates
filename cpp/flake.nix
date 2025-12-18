@@ -98,11 +98,19 @@
             export CXX=clang++
 
             # Create short symlinks to Nix store paths for readable diagnostics
-            # The symlink points directly to the C++ headers, versioned by GCC version
             ln -sfn ${pkgs.gcc.cc}/include/c++/*/ ${nixSymlinkDir}
             export NIX_SYMLINK_DIR="${nixSymlinkDir}"
 
-            ${preCommitCheck.shellHook}
+            # Generate compile_commands.json for clangd
+            if [ ! -f build/compile_commands.json ]; then
+              mkdir -p build
+              (cd build && cmake .. > /dev/null 2>&1)
+            fi
+
+            # Only install pre-commit hooks if this is the git root
+            if [ "$(git rev-parse --show-toplevel 2>/dev/null)" = "$(pwd)" ]; then
+              ${preCommitCheck.shellHook}
+            fi
           '';
         };
 
