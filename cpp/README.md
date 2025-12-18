@@ -1,6 +1,12 @@
 # C++ Project
 
-C++23 project with CMake build system.
+C++ project with:
+
+- [C++ 2023](https://en.cppreference.com/w/cpp/23) language features.
+- [CMake](https://cmake.org/) build system.
+- [Helix](https://helix-editor.com/) editor configuration.
+- [Direnv](https://direnv.net/) configuration (auto-activate environment)
+- Useful CLI tools pre-installed via [Nix](https://nixos.org/)
 
 ## Creating a New Project
 
@@ -9,12 +15,8 @@ Initialize a new C++ project from this template:
 ```bash
 mkdir my-cpp-project
 cd my-cpp-project
-nix flake init -t /home/wvhulle/.config/nixos#cpp
+nix flake init -t github:wvhulle/nix-templates#cpp
 ```
-
-## Prerequisites
-
-All tools are available globally through NixOS configuration:
 
 ## Getting Started
 
@@ -43,5 +45,3 @@ clang-tidy -p build --explain-config main.cpp
 # Fix issues automatically (use with caution)
 clang-tidy -p build --fix main.cpp
 ```
-
-The `-p build` flag uses `compile_commands.json` for accurate analysis.
