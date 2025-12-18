@@ -19,6 +19,8 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         projectName = builtins.baseNameOf (builtins.toString ./.);
+        gccVersion = pkgs.gcc.cc.version;
+        nixSymlinkDir = "/tmp/gcc-${gccVersion}";
 
         cppPackage = pkgs.stdenv.mkDerivation {
           pname = projectName;
@@ -94,6 +96,12 @@
           shellHook = ''
             export CC=clang
             export CXX=clang++
+
+            # Create short symlinks to Nix store paths for readable diagnostics
+            # The symlink points directly to the C++ headers, versioned by GCC version
+            ln -sfn ${pkgs.gcc.cc}/include/c++/*/ ${nixSymlinkDir}
+            export NIX_SYMLINK_DIR="${nixSymlinkDir}"
+
             ${preCommitCheck.shellHook}
           '';
         };

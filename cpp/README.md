@@ -1,4 +1,4 @@
-# C++ Project
+# C++ Clang with Nix project template
 
 C++ project with:
 
@@ -7,8 +7,7 @@ C++ project with:
 - [Helix](https://helix-editor.com/) editor configuration.
 - [Direnv](https://direnv.net/) configuration (auto-activate environment)
 - Useful CLI tools pre-installed via [Nix](https://nixos.org/)
-
-## Creating a New Project
+- Long path substitution in build output using a symlink for readable compiler output.
 
 Initialize a new C++ project from this template:
 
@@ -17,8 +16,6 @@ mkdir my-cpp-project
 cd my-cpp-project
 nix flake init -t github:wvhulle/nix-templates#cpp
 ```
-
-## Getting Started
 
 Automatically rebuild and run on file changes:
 
