@@ -101,6 +101,12 @@
             ln -sfn ${pkgs.gcc.cc}/include/c++/*/ ${nixSymlinkDir}
             export NIX_SYMLINK_DIR="${nixSymlinkDir}"
 
+            # Generate compile_commands.json for clangd if it doesn't exist
+            if [ ! -f build/compile_commands.json ]; then
+              mkdir -p build
+              (cd build && cmake ..)
+            fi
+
             ${preCommitCheck.shellHook}
           '';
         };
