@@ -1,14 +1,32 @@
 ---
+# Clang-tidy configuration for C++ projects
+# Enable comprehensive checks for code quality, safety, and modern C++ practices
+
 Checks: >
   -*,
   bugprone-*,
+  cert-*,
   clang-analyzer-*,
   cppcoreguidelines-*,
+  misc-*,
   modernize-*,
   performance-*,
   readability-*,
   -modernize-use-trailing-return-type,
-  -readability-identifier-length
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -misc-non-private-member-variables-in-classes
+
+# Category descriptions:
+# bugprone-*       : Catches common programming errors and bug patterns
+# cert-*           : CERT C++ Coding Standard security and safety checks
+# clang-analyzer-* : Deep static analysis for potential bugs
+# cppcoreguidelines-* : C++ Core Guidelines recommendations
+# misc-*           : General best practices (const-correctness, exception handling)
+# modernize-*      : Suggests modern C++ features over legacy patterns
+# performance-*    : Performance optimization opportunities
+# readability-*    : Code clarity and maintainability improvements
 
 CheckOptions:
   - key: readability-identifier-naming.VariableCase

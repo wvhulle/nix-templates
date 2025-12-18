@@ -18,7 +18,7 @@ def check-dependencies []: nothing -> nothing {
 def ensure-build-dir []: nothing -> nothing {
   if not ("build" | path exists) {
     print -e "Build directory not found. Running initial CMake configuration..."
-    cmake -B build -DCMAKE_CXX_COMPILER=clang++
+    cmake -B build
     if $env.LAST_EXIT_CODE != 0 {
       error make {
         msg: "CMake configuration failed"

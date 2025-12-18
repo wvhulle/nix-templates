@@ -16,113 +16,32 @@ nix flake init -t /home/wvhulle/.config/nixos#cpp
 
 All tools are available globally through NixOS configuration:
 
-- clang/clang++ (compiler)
-- cmake (build system)
-- clangd (LSP for editor integration)
-- clang-format (auto-formatting)
-- clang-tidy (linting)
-- gdb (debugger)
-- watchexec (file watcher)
-
 ## Getting Started
-
-### Initial Setup
-
-```bash
-# Generate build files
-cmake -B build -DCMAKE_CXX_COMPILER=clang++
-
-# Build the project
-cmake --build build
-```
-
-### Build and Run
-
-```bash
-# Using the convenience script
-nu run.nu
-
-# Or manually
-cmake --build build && ./build/main
-```
-
-### Watch Mode
 
 Automatically rebuild and run on file changes:
 
 ```bash
-nu run.nu --watch
+nu run.nu
 ```
 
 Edit your source files - the project rebuilds automatically on save.
 
-## Project Structure
+## Linting
 
-```
-.
-├── main.cpp              # Entry point
-├── CMakeLists.txt        # Build configuration
-├── compile_commands.json # LSP compilation database (generated)
-├── build/                # Build artifacts (generated)
-├── run.nu               # Convenience build/run script
-├── .clang-tidy          # Linter configuration
-└── flake.nix            # Project dependencies
-```
-
-## Development Workflow
-
-1. **Edit** - Open files in Helix: `hx main.cpp`
-   - Auto-formatting on save
-   - Inline diagnostics from clangd + clang-tidy
-   - Code completion and go-to-definition
-
-2. **Build** - `cmake --build build`
-
-3. **Run** - `./build/main`
-
-4. **Debug** - `gdb ./build/main`
-
-5. **Watch** - `nu run.nu --watch` for rapid iteration
-
-## CMake Commands
+Run clang-tidy manually to see detailed diagnostics:
 
 ```bash
-# Configure (only needed once or after CMakeLists.txt changes)
-cmake -B build -DCMAKE_CXX_COMPILER=clang++
+# Single file
+clang-tidy -p build main.cpp
 
-# Build
-cmake --build build
+# All source files
+clang-tidy -p build *.cpp
 
-# Build specific target
-cmake --build build --target main
+# With detailed explanations
+clang-tidy -p build --explain-config main.cpp
 
-# Clean and rebuild
-rm -rf build && cmake -B build -DCMAKE_CXX_COMPILER=clang++ && cmake --build build
+# Fix issues automatically (use with caution)
+clang-tidy -p build --fix main.cpp
 ```
 
-## Customization
-
-### Adding Source Files
-
-Edit `CMakeLists.txt`:
-
-```cmake
-add_executable(main
-    main.cpp
-    other.cpp
-)
-```
-
-### Adding Dependencies
-
-Edit `flake.nix` to add project-specific packages.
-
-### Linter Configuration
-
-Edit `.clang-tidy` to customize which checks run.
-
-## Tips
-
-- **Rebuild compile_commands.json** after CMakeLists.txt changes: `cmake -B build -DCMAKE_CXX_COMPILER=clang++`
-- **Format manually** in Helix: `:format`
-- **View diagnostics** in Helix: `:log-open` for detailed clangd output
+The `-p build` flag uses `compile_commands.json` for accurate analysis.
