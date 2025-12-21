@@ -1,6 +1,7 @@
 ---
-# Clang-tidy configuration for C++ projects
-# Enable comprehensive checks for code quality, safety, and modern C++ practices
+
+HeaderFilterRegex: '.*'
+SystemHeaders: false
 
 Checks: >
   -*,
@@ -18,16 +19,6 @@ Checks: >
   -cppcoreguidelines-avoid-magic-numbers,
   -misc-non-private-member-variables-in-classes
 
-# Category descriptions:
-# bugprone-*       : Catches common programming errors and bug patterns
-# cert-*           : CERT C++ Coding Standard security and safety checks
-# clang-analyzer-* : Deep static analysis for potential bugs
-# cppcoreguidelines-* : C++ Core Guidelines recommendations
-# misc-*           : General best practices (const-correctness, exception handling)
-# modernize-*      : Suggests modern C++ features over legacy patterns
-# performance-*    : Performance optimization opportunities
-# readability-*    : Code clarity and maintainability improvements
-
 CheckOptions:
   - key: readability-identifier-naming.VariableCase
     value: lower_case
@@ -35,3 +26,11 @@ CheckOptions:
     value: lower_case
   - key: readability-identifier-naming.ClassCase
     value: CamelCase
+  - key: cppcoreguidelines-pro-type-member-init.IgnoreArrays
+    value: false
+  - key: cppcoreguidelines-pro-type-member-init.UseAssignment
+    value: false
+  - key: misc-const-correctness.WarnPointersAsValues
+    value: true
+  - key: misc-const-correctness.TransformPointersAsValues
+    value: true
